@@ -30,4 +30,5 @@ A simple Node.js + Express project serving:
   Utilities: CORS 
    
 ##SCREENSHOTS##
+Inside backend folder a screenshot folder is present where all the releavnt screenshot and working proof of the website is present.
 ![Earphones Product List Screenshot](./screenshots/earphones-list.png)
