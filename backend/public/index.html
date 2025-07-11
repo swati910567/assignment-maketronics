@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Top Wireless Earphones under ₹2000</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; }
+    .filters { margin-bottom: 20px; }
+    input, select { padding: 5px; margin-right: 10px; }
+    .card { background: #fff; padding: 10px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 1px 3px #ccc; }
+    .card h3 { margin: 0; }
+  </style>
+</head>
+<body>
+
+<h2>Top Wireless Earphones under ₹2000</h2>
+
+<div class="filters">
+  <input type="text" id="searchInput" placeholder="Search" />
+  <select id="priceFilter">
+    <option value="">Price Filter</option>
+    <option value="1000">Up to ₹1000</option>
+    <option value="1500">Up to ₹1500</option>
+    <option value="2000">Up to ₹2000</option>
+  </select>
+  <button onclick="loadData()">Search</button>
+</div>
+
+<div id="output"></div>
+
+<script>
+function loadData() {
+  const search = document.getElementById('searchInput').value;
+  const maxPrice = document.getElementById('priceFilter').value;
+
+  let url = '/api/earphones'; // Relative URL for Render deployment
+  const params = [];
+  if (search) params.push(`search=${encodeURIComponent(search)}`);
+  if (maxPrice) params.push(`maxPrice=${encodeURIComponent(maxPrice)}`);
+  if (params.length) url += '?' + params.join('&');
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const out = document.getElementById('output');
+      out.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `
+          <h3>${item.title}</h3>
+          <p>${item.description}</p>
+          <p><strong>Price:</strong> ${item.price}</p>
+          <p><strong>Source:</strong> ${item.source}</p>
+          <a href="${item.link}" target="_blank">Buy Now</a>
+        `;
+        out.appendChild(div);
+      });
+    });
+}
+loadData();
+</script>
+
+</body>
+</html>
